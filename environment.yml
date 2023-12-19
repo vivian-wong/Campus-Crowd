@@ -1,0 +1,28 @@
+name: pedestrian-test-2
+channels:
+    - conda-forge
+    - pytorch
+#     - nvidia
+    - pyg
+    - defaults
+dependencies: 
+    - python=3.10
+    - pandas
+    - scipy
+    - matplotlib
+    - jupyterlab
+    - ipykernel
+    - ipywidgets
+    - pytorch>=1.11
+    - pyg
+    - torchvision
+#     - pylibcugraphops>=23.02
+    - pip
+    - pip: 
+#         - pytorch-lightning
+#         - lightning-bolts
+        - opencv-python
+        - utm
+        - filterpy
+        - seaborn
+        - torch-geometric-temporal
