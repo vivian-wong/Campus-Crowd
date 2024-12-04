@@ -1,0 +1,9 @@
+numpy>=2.0
+matplotlib
+seaborn
+opencv-python
+tqdm
+configparser
+argparse
+ipykernel
+torch>=2.5
