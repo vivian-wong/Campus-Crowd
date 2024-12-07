@@ -43,5 +43,5 @@ and generate plots with the jupyter notebook experiments/plot_results.ipynb
 Contributions are welcome! Please read the CONTRIBUTING.md for guidelines.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/vivian-wong/Campus-Crowd/blob/master/LICENSE) file for details.
 
