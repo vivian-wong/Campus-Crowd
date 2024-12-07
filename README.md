@@ -17,7 +17,7 @@ conda activate campus-crowd
 # install prerequisites
 pip install -r requirements.txt
 # install pytorch geometric temporal
-python setup.py
+python install_pyg.py
 ```
 
 ## Usage
