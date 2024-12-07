@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from campuscrowd.data_utils import get_pyg_temporal_dataset, get_loaders
 from campuscrowd.models import DenseGCNGRU, GCNGRU, GRU_only
-from campuscrowd import train, test, save_or_update_checkpoint
+from campuscrowd import train, evaluate, save_or_update_checkpoint
 
 if __name__ == "__main__":
     # Set up command-line argument parser
