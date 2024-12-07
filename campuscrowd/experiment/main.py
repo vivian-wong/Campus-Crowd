@@ -1,24 +1,19 @@
-import pandas as pd 
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import cv2, glob, os, torch, math, torchvision, datetime
-from tqdm import tqdm 
-import torch.nn.functional as F
-import configparser
+# import all the necessary libraries
+import os
+import sys
+import torch
 import argparse
 
-# my files
-from cmgraph import parse_gcs, image_to_world, GCSDatasetLoaderStatic, DatasetLoaderStatic
-from models import DenseGCNGRU, GRU_only, GCNGRU
+# for relative imports
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-'''modified from notebook for reporting experimental results. 
-note: environmental conflict on GAT hasn't been resolved. so we've only doing GCN GRU encoders on the 3 datasets
-'''
+from campuscrowd.data_utils import get_pyg_temporal_dataset, get_loaders
+from campuscrowd.models import DenseGCNGRU, GCNGRU, GRU_only
+from campuscrowd import train, test, save_or_update_checkpoint
 
 if __name__ == "__main__":
     # Set up command-line argument parser
-    parser = argparse.ArgumentParser(description="Campus Crowd Experiment Args")
+    parser = argparse.ArgumentParser(description="Campus Crowd Forecasting Experiment")
 
     # Add arguments for your experiment
     parser.add_argument("--DATASET", type=str, help="Name of dataset. Available options: 'GCS', 'SEQ', 'STADIUM_2023'")
@@ -42,16 +37,14 @@ if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(device)
     
-    ###### NOTE TO YIRONG: THIS SECTION IS WHERE I LOAD DATASET.
     # get pytorch dataloaders
-    dataset, _ = get_pyg_temporal_dataset(args.DATASET, args.forecasting_horizon)
+    dataset = get_pyg_temporal_dataset(args.DATASET, args.forecasting_horizon)
     train_loader, val_loader, test_loader = get_loaders(dataset, 
                                                         args.batch_size, 
                                                         args.train_ratio, 
                                                         args.val_ratio, 
                                                         args.test_ratio, 
                                                         device)
-    ###### NOTE TO YIRONG: ANYTHING BELOW THIS LINE IS PROBABLY NOT HELPFUL TO YOU. 
     # get static edge index (i.e. adjacency matrix). Only need to do this one since edge index doesn't change for each CMGraph. 
     for snapshot in dataset:
         static_edge_index = snapshot.edge_index.to(device)
@@ -72,12 +65,12 @@ if __name__ == "__main__":
                             batch_size=args.batch_size).to(device) 
     
     # train model
-    model, checkpoint_dict = training_loop( model, 
-                                            train_loader, 
-                                            val_loader, 
-                                            static_edge_index, 
-                                            num_epochs=args.epochs, lr=args.lr
-                                           )
+    model, checkpoint_dict = train( model, 
+                                    train_loader, 
+                                    val_loader, 
+                                    static_edge_index, 
+                                    num_epochs=args.epochs, lr=args.lr
+                                    )
     if args.save_model:
         filename = model.__class__.__name__+'_'+args.DATASET+'_'+'{}_steps'.format(args.forecasting_horizon)+'.pt'
         path = os.path.join(args.save_dir,
@@ -85,7 +78,7 @@ if __name__ == "__main__":
         save_or_update_checkpoint(checkpoint_dict, path)
     
     # test model
-    model, checkpoint_dict = testing_loop(model, test_loader, static_edge_index, checkpoint_dict=checkpoint_dict)
+    model, checkpoint_dict = evaluate(model, test_loader, static_edge_index, checkpoint_dict=checkpoint_dict)
     # update save to include test mse and mae. 
     if args.save_model:
         save_or_update_checkpoint(checkpoint_dict, path)

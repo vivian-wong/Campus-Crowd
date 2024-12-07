@@ -34,3 +34,6 @@ __pycache__/
 
 # ignore torch model checkpoint files
 checkpoints/
+
+# ignore archived codes
+archived/

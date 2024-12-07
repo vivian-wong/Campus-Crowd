@@ -15,3 +15,5 @@ os.system('pip install pandas==2.2.3') # temporary solution for pandas, numpy an
 import torch_geometric
 import torch_geometric_temporal
 
+# might have to install this if there's an error somewhere with cuda
+# os.system('pip install --no-cache-dir --extra-index-url https://pypi.nvidia.com cugraph-cu11')
