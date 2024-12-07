@@ -26,20 +26,18 @@ Loading datasets
 from dataloader import DatasetLoaderStatic
 dataset = DatasetLoaderStatic('path/to/dataset')
 ```
-Using STEN models
-```
-from models.gcn_gru import GCNGRU
-model = GCNGRU(input_dim, hidden_dim, output_dim)
-```
+Running crowd flow forecasting with STEN models 
+See demo notebook on forecasting. 
+
 ## Examples
 Check the examples/ directory for simplified demo notebooks.
 
 ## Reproducing paper experiments 
 To run all experiments as detailed in the paper, run 
 ```
-python examples/reproduce_paper_experiments.py
+bash reproduce_paper_experiments.sh
 ```
-and generate plots with the jupyter notebook examples/generate_plots.ipynb
+and generate plots with the jupyter notebook experiments/generate_plots.ipynb
 
 ## Contributing
 Contributions are welcome! Please read the CONTRIBUTING.md for guidelines.
