@@ -31,3 +31,6 @@ __pycache__/
 # Ignore temporary files
 *.tmp
 *.swp
+
+# ignore torch model checkpoint files
+checkpoints/
