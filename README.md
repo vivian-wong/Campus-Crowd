@@ -37,7 +37,7 @@ To run all experiments as detailed in the paper, run
 ```
 bash reproduce_paper_experiments.sh
 ```
-and generate plots with the jupyter notebook experiments/generate_plots.ipynb
+and generate plots with the jupyter notebook experiments/plot_results.ipynb
 
 ## Contributing
 Contributions are welcome! Please read the CONTRIBUTING.md for guidelines.
