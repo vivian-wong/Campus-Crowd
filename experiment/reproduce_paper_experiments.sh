@@ -5,7 +5,7 @@ for FORECASTING_HORIZON in 20 60 120 240
 do
     for MODEL in DenseGCNGRU GCNGRU GRU
     do
-        for DATASET in GCS SEQ STADIUM_2023
+        for DATASET in SEQ STADIUM
         do
             # Call the experiment script with the specified parameters
             python main.py \
