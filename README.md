@@ -16,7 +16,7 @@ conda create --name campus-crowd python=3.10
 conda activate campus-crowd
 # install prerequisites
 pip install -r requirements.txt
-# install pytorch geometric temporal
+# install pytorch geometric and pytorch geometric temporal
 python install_pyg.py
 ```
 
